@@ -1,0 +1,29 @@
+
+Melissa Pilley
+Compiler Design - Lab 1: Read Source
+
+C# compiler and runtime
+
+General Notes:
+	C# Compiler - 
+		Compiles itself and other C# programs.
+		Usually used to compiler Mono and is fairly fast. 
+	Mono Runtime -
+		Provides JIT compiler, AOT, a library loader, garbage collector, 
+			threading system, and interoperability functionality
+		Base Class Library - 
+			Set of classes that provide foundation for building applications
+		Mono Class Library - 
+			Go above the base class library. Provide functionality 
+			(EX: zip files, LDAP, OpenGL)
+			
+
+Identify which files/functions are responsible for each compiler source
+	(scan/lex/tokenize, parse, AST, optimization, code generation).
+	scan: sgen-minor-scan-object.h (Object scanning in the nursery collection)
+		  sgen-scan-object.h (generic object scan)
+	lex: mono/mcs/jay/skeleton 
+	tokenize: mono/mono/metadata/tokentype.h 
+	AST(Represents the program in the data structure): Microsfot.Scripting.Core.csproj
+	Optimization: ExpressionOptimizer.cs (Optimizes expressions ); contains optimize function
+	Code Generation: OperationContractGnerationContext.cs

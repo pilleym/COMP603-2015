@@ -102,7 +102,15 @@ class Program : public Node {
  * Modify as necessary and add whatever functions you need to get things done.
  */
 void parse(fstream & file, Program * program) {
-    char c;
+	char c;
+
+	while ((char))file.peek() != -1;
+	{
+		file >> c;
+		program->childer.push_back(new CommandNode(c));
+
+	}
+
     // How to peek at the next character
     c = (char)file.peek();
     // How to print out that character
@@ -113,6 +121,7 @@ void parse(fstream & file, Program * program) {
     cout << c;
     // How to insert a node into the program.
     program->children.push_back(new CommandNode(c));
+
 }
 
 /**

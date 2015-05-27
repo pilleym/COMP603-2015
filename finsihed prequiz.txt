@@ -22,7 +22,6 @@ git push -u --all origin
 
 What is the difference between a set, a bag, and a sequence?
 	A sequence is a list of items. A set is unordered group of items. 
-	Set, bag, and sequence are data structures. 
 
 What is a language (in terms of sets and sequences)?
 	
