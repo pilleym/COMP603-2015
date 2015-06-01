@@ -210,6 +210,7 @@ class Interpreter : public Visitor {
             // set pointer to zero
             for (vector<Node*>::const_iterator it = program->children.begin(); it != program->children.end(); ++it) {
                 (*it)->accept(this);
+
             }
         }
 
