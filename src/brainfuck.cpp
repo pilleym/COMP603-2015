@@ -187,27 +187,43 @@ class Interpreter : public Visitor {
         void visit(const CommandNode * leaf) {
             switch (leaf->command) {
                 case INCREMENT:
+                    memory[pointer]++;
                     break;
                 case DECREMENT:
+                    memory[pointer]--;
                     break;
                 case SHIFT_LEFT:
+                    pointer--;
                     break;
                 case SHIFT_RIGHT:
+                    pointer++;
                     break;
                 case INPUT:
                     break;
                 case OUTPUT:
+                    cout << memory[pointer];
                     break;
+
+
             }
         }
         void visit(const Loop * loop) {
             for (vector<Node*>::const_iterator it = loop->children.begin(); it != loop->children.end(); ++it) {
                 (*it)->accept(this);
             }
+            if(memory[pointer] !=0)
+            {
+                visit(loop);
+            }
+            
         }
         void visit(const Program * program) {
             // zero init the memory array
             // set pointer to zero
+            for (int i =0; i < 000; i++)
+            {
+                memory[i] = 0;
+            }
             for (vector<Node*>::const_iterator it = program->children.begin(); it != program->children.end(); ++it) {
                 (*it)->accept(this);
 
