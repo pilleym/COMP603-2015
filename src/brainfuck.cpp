@@ -149,7 +149,6 @@ void parse(fstream & file, Container * container) {
         
 
     }
-    file.close(); 
 }
 
 /**
@@ -203,6 +202,7 @@ class Interpreter : public Visitor {
                     pointer++;
                     break;
                 case INPUT:
+                    cin.get(memory[pointer]);
                     break;
                 case OUTPUT:
                     cout << memory[pointer];
@@ -212,12 +212,11 @@ class Interpreter : public Visitor {
             }
         }
         void visit(const Loop * loop) {
-            for (vector<Node*>::const_iterator it = loop->children.begin(); it != loop->children.end(); ++it) {
-                (*it)->accept(this);
-            }
-            if(memory[pointer] !=0)
+            while(memory[pointer] !=0)
             {
-                visit(loop);
+                for (vector<Node*>::const_iterator it = loop->children.begin(); it != loop->children.end(); ++it) {
+                    (*it)->accept(this);
+                }
             }
             
         }
@@ -228,6 +227,7 @@ class Interpreter : public Visitor {
             {
                 memory[i] = 0;
             }
+            pointer = 0;
             for (vector<Node*>::const_iterator it = program->children.begin(); it != program->children.end(); ++it) {
                 (*it)->accept(this);
 
@@ -248,7 +248,7 @@ int main(int argc, char *argv[]) {
             file.open(argv[i], fstream::in);
             parse(file, & program);
             program.accept(&printer);
-//            program.accept(&interpreter);
+            program.accept(&interpreter);
             file.close();
         }
     }
