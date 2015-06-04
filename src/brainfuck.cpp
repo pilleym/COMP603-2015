@@ -55,6 +55,9 @@ class Node {
  * CommandNode publicly extends Node to accept visitors.
  * CommandNode represents a leaf node with a primitive Brainfuck command in it.
  */
+
+ /*Modify commandNode so that it includes a counter (presumably an int)
+ */
 class CommandNode : public Node {
     public:
         Command command;
@@ -105,6 +108,9 @@ class Program : public Container {
  * Read in the file by recursive descent.
  * Modify as necessary and add whatever functions you need to get things done.
  */
+
+ //modify parser a bit so that it only emits a command node after it has encountered a full
+//run of the same command
 void parse(fstream & file, Container * container) {
     char c;
     // How to peek at the next character
@@ -123,11 +129,9 @@ void parse(fstream & file, Container * container) {
     // How to insert a node into the container.
     //container->children.push_back(new CommandNode(c));
 
-     while ((char)file.peek() != -1)
+   while (file >> c)
     {
 
-        file >> c;
-       
         if(c == '[')
         {
             Loop * loop = new Loop();
@@ -140,12 +144,12 @@ void parse(fstream & file, Container * container) {
         }
         else
         {
-            container->children.push_back(new CommandNode(c));
+          container->children.push_back(new CommandNode(c));
         }
         
 
     }
-    file.close();
+    file.close(); 
 }
 
 /**
@@ -220,7 +224,7 @@ class Interpreter : public Visitor {
         void visit(const Program * program) {
             // zero init the memory array
             // set pointer to zero
-            for (int i =0; i < 000; i++)
+            for (int i =0; i < 30000 ;i++)
             {
                 memory[i] = 0;
             }
@@ -243,8 +247,8 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < argc; i++) {
             file.open(argv[i], fstream::in);
             parse(file, & program);
-//            program.accept(&printer);
-            program.accept(&interpreter);
+            program.accept(&printer);
+//            program.accept(&interpreter);
             file.close();
         }
     }
